@@ -12,7 +12,8 @@ wget -O - -q https://github.com/checkstyle/checkstyle/releases/download/checksty
 
 for input_file in ${INPUT_FILE_LIST}; do
   echo "Analysing \"${input_file}\""
-  exec java -jar /checkstyle.jar "${input_file}" -c "${INPUT_CHECKSTYLE_CONFIG}" ${OPT_PROPERTIES_FILE} -f xml \
+  found_errors=\
+  $(exec java -jar /checkstyle.jar "${input_file}" -c "${INPUT_CHECKSTYLE_CONFIG}" ${OPT_PROPERTIES_FILE} -f xml \
    | reviewdog -f=checkstyle \
         -name="${INPUT_TOOL_NAME}" \
         -reporter="${INPUT_REPORTER:-github-pr-check}" \
@@ -20,5 +21,5 @@ for input_file in ${INPUT_FILE_LIST}; do
         -fail-on-error="${INPUT_FAIL_ON_ERROR:-false}" \
         -level="${INPUT_LEVEL}" \
    | grep ': error:' \
-   | wc -l
+   | wc -l)
 done
