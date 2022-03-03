@@ -1,6 +1,6 @@
 # action.yml
 name: 'Run java checkstyle'
-description: 'Run java checkstyle with reviewdog'
+description: 'Run java checkstyle with reviewdog and output statistics for capture elsewhere'
 branding:
   icon: 'code'  
   color: 'red'
@@ -40,6 +40,9 @@ inputs:
   file_list:
     description: 'list of files to operate on.'
     default: ''
+outputs:
+  total_volations:
+    description: total number of violations detected
 runs:
   using: 'docker'
   image: 'Dockerfile'
