@@ -10,19 +10,21 @@ fi
 
 wget -O - -q https://github.com/checkstyle/checkstyle/releases/download/checkstyle-${INPUT_CHECKSTYLE_VERSION}/checkstyle-${INPUT_CHECKSTYLE_VERSION}-all.jar > /checkstyle.jar
 
-total_errors=0
+total_violations=0
 for input_file in ${INPUT_FILE_LIST}; do
-  found_errors=$(exec java -jar /checkstyle.jar "${input_file}" -c "${INPUT_CHECKSTYLE_CONFIG}" ${OPT_PROPERTIES_FILE} -f xml \
-   | reviewdog -f=checkstyle \
-        -name="${INPUT_TOOL_NAME}" \
-        -reporter="${INPUT_REPORTER:-github-pr-check}" \
-        -filter-mode="${INPUT_FILTER_MODE:-added}" \
-        -fail-on-error="${INPUT_FAIL_ON_ERROR:-false}" \
-        -level="${INPUT_LEVEL}" \
-   | grep ': error:' \
-   | wc -l)
-  echo "Analysed \"${input_file}\" with ${found_errors} relevant errors found"
-  total_errors=$(($total_errors + $found_errors))
+  if [[ $input_file == *.java ]]; then
+    found_v=$(exec java -jar /checkstyle.jar "${input_file}" -c "${INPUT_CHECKSTYLE_CONFIG}" ${OPT_PROPERTIES_FILE} -f xml \
+     | reviewdog -f=checkstyle \
+          -name="${INPUT_TOOL_NAME}" \
+          -reporter="${INPUT_REPORTER:-github-pr-check}" \
+          -filter-mode="${INPUT_FILTER_MODE:-added}" \
+          -fail-on-error="${INPUT_FAIL_ON_ERROR:-false}" \
+          -level="${INPUT_LEVEL}" \
+     | grep ': error:' \
+     | wc -l)
+    echo "Analysed \"${input_file}\" with ${found_v} violations found on edited lines"
+    total_violations=$(($total_violations + $found_v))
+  fi    
 done
 
-echo "Total errors found: ${total_errors}"
+echo "Total violations found: ${total_violations}"
