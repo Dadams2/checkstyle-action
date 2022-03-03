@@ -30,3 +30,5 @@ for input_file in ${INPUT_FILE_LIST}; do
 done
 
 echo "Total violations found: ${total_violations}"
+echo ::set-output name=total_volations::"${total_violations}"
+
