@@ -10,6 +10,12 @@ fi
 
 wget -O - -q https://github.com/checkstyle/checkstyle/releases/download/checkstyle-${INPUT_CHECKSTYLE_VERSION}/checkstyle-${INPUT_CHECKSTYLE_VERSION}-all.jar > /checkstyle.jar
 
+echo $INPUT_FILE_LIST
+
+for input_file in ${INPUT_FILE_LIST}; do
+  echo $input_file
+done
+
 total_violations=0
 for input_file in ${INPUT_FILE_LIST}; do
   if [[ "$input_file" == *.java ]]; then
