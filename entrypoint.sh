@@ -8,6 +8,10 @@ if [ -n "${INPUT_PROPERTIES_FILE}" ]; then
   OPT_PROPERTIES_FILE="-p ${INPUT_PROPERTIES_FILE}"
 fi
 
+for file in ${INPUT_FILE_LIST}; do
+  echo ${file}
+done
+
 wget -O - -q https://github.com/checkstyle/checkstyle/releases/download/checkstyle-${INPUT_CHECKSTYLE_VERSION}/checkstyle-${INPUT_CHECKSTYLE_VERSION}-all.jar > /checkstyle.jar
 
 exec java -jar /checkstyle.jar "${INPUT_WORKDIR}" -c "${INPUT_CHECKSTYLE_CONFIG}" ${OPT_PROPERTIES_FILE} -f xml \
@@ -17,4 +21,3 @@ exec java -jar /checkstyle.jar "${INPUT_WORKDIR}" -c "${INPUT_CHECKSTYLE_CONFIG}
       -filter-mode="${INPUT_FILTER_MODE:-added}" \
       -fail-on-error="${INPUT_FAIL_ON_ERROR:-false}" \
       -level="${INPUT_LEVEL}" 
- #| grep 'error: '
