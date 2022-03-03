@@ -25,7 +25,7 @@ for input_file in ${INPUT_FILE_LIST}; do
     echo "Analysed \"${input_file}\" with ${found_v} violations found on edited lines"
     total_violations=$(($total_violations + $found_v))
   else 
-    echo "Does not match ${input_file}"
+    echo "Does not match \"${input_file}\""
   fi
 done
 
