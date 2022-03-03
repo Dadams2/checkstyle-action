@@ -10,6 +10,7 @@ fi
 
 wget -O - -q https://github.com/checkstyle/checkstyle/releases/download/checkstyle-${INPUT_CHECKSTYLE_VERSION}/checkstyle-${INPUT_CHECKSTYLE_VERSION}-all.jar > /checkstyle.jar
 
+total_errors=0
 for input_file in ${INPUT_FILE_LIST}; do
   echo "Analysing \"${input_file}\""
   found_errors=$(exec java -jar /checkstyle.jar "${input_file}" -c "${INPUT_CHECKSTYLE_CONFIG}" ${OPT_PROPERTIES_FILE} -f xml \
@@ -21,5 +22,7 @@ for input_file in ${INPUT_FILE_LIST}; do
         -level="${INPUT_LEVEL}" \
    | grep ': error:' \
    | wc -l)
-   echo $found_errors
+   total_errors=$(($total_errors + $found_errors))
 done
+
+echo "Total errors found: ${total_errors}"
