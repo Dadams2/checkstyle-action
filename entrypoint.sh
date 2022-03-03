@@ -20,7 +20,7 @@ echo *.java
 
 total_violations=0
 for input_file in ${INPUT_FILE_LIST}; do
-  if [[ "$input_file" == *.java ]]; then
+  if [[ "${input_file: -5}" == ".java"]]; then
     found_v=$(exec java -jar /checkstyle.jar "${input_file}" -c "${INPUT_CHECKSTYLE_CONFIG}" ${OPT_PROPERTIES_FILE} -f xml \
      | reviewdog -f=checkstyle \
           -name="${INPUT_TOOL_NAME}" \
