@@ -18,5 +18,6 @@ for input_file in ${INPUT_FILE_LIST}; do
         -reporter="${INPUT_REPORTER:-github-pr-check}" \
         -filter-mode="${INPUT_FILTER_MODE:-added}" \
         -fail-on-error="${INPUT_FAIL_ON_ERROR:-false}" \
-        -level="${INPUT_LEVEL}" 
+        -level="${INPUT_LEVEL}"
+   | grep ': error:'
 done
