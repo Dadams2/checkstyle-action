@@ -24,7 +24,9 @@ for input_file in ${INPUT_FILE_LIST}; do
      | wc -l)
     echo "Analysed \"${input_file}\" with ${found_v} violations found on edited lines"
     total_violations=$(($total_violations + $found_v))
-  fi    
+  else 
+    echo "Does not match ${input_file}"
+  fi
 done
 
 echo "Total violations found: ${total_violations}"
