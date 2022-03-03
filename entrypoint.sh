@@ -22,4 +22,5 @@ for input_file in ${INPUT_FILE_LIST}; do
         -level="${INPUT_LEVEL}" \
    | grep ': error:' \
    | wc -l)
+   echo $found_errors
 done
