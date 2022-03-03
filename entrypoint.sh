@@ -14,6 +14,7 @@ echo $INPUT_FILE_LIST
 
 for input_file in ${INPUT_FILE_LIST}; do
   echo $input_file
+  echo  "${input_file: -5}"
 done
 
 echo *.java
